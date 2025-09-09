@@ -1,10 +1,16 @@
 # Build stage
-FROM node:20-alpine AS build
-WORKDIR /app
-COPY package*.json ./
-RUN npm ci
-COPY . .
-RUN npm run build
+FROM node:20-alpine AS build  
+# Aca se especifica la imagen de node y como se llama, en este caso "build"
+WORKDIR /app 
+# Establece el directorio de trabajo dentro del contenedor
+COPY package*.json ./ 
+# Copia los archivos de dependencias
+RUN npm ci 
+# Instala las dependencias de manera limpia
+COPY . . 
+# Copia el resto de los archivos de la aplicación
+RUN npm run build 
+# Construye la aplicación
 
 # Production stage
 FROM nginx:alpine
